@@ -2,26 +2,26 @@
 # db schema
 
 ## ingredient
-- id integer primary key serial
-- name string not null unique
-- description string not null unique
+- id serial primary key 
+- name varchar(99) not null unique
+- description varchar(999) not null unique
 
 ## dish
-- id integer primary key serial
-- name string not null unique
+- id serial primary key 
+- name varchar(99) not null unique
 - description string not null unique
 
 ## ingredient_dish
-- id integer primary key serial
-- ingredient_id references ingredient(id)
-- dish_id references dish(id)
+- id serial primary key 
+- ingredient_id integer references ingredient(id)
+- dish_id integer references dish(id)
 
 ## menu
-- id integer primary key serial
-- name string not null unique
-- description string not null unique
+- id serial primary key 
+- name varchar(99) not null unique
+- description varchar(999) not null unique
 
  ## menu_dish
- - id integer primary key serial
- - menu_id references menu(id)
- - dish_id references dish(id)
+ - id serial primary key 
+ - menu_id integer references menu(id)
+ - dish_id integer references dish(id)

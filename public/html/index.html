@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    </head>
+    <body>
+        <div id="app">
+            <div v-for="alert in alerts" v-cloak class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{alert.heading}}</strong> {{alert.body}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="container-fluid">
+                <h1 class="text-center mt-5">Listmaker</h1>
+                <h2 class="text-center mb-5"><em>It's just one thing after another</em></h2>
+                <h2 class="code">Your Code: <a v-cloak v-bind:href="'/?code='+code">{{code}}</a></h2>
+                <div v-show="sortOrder === 1" v-on:click="sortItems" class="text-center m-3 sort">Sort <i class="fa fa-sort-up"></i></div>
+                <div v-show="sortOrder !== 1" v-on:click="sortItems" class="text-center m-3 sort">Sort <i class="fa fa-sort-down"></i></div>
+                <div v-for="item in sortedList" v-cloak class="row">
+                    <div class="col-1 col-md-2"></div>
+                    <div class="col-1 col-md-1 text-right">
+                        <span>Data:</span>
+                    </div>
+                    <div class="col-8 col-md-6 text-right">
+                        <span v-bind:class="{done:item.done}">{{item.text}}</span>
+                        <span v-on:click="completeItem(item)"><i  class="fa fa-check-circle "></i></span>
+                        <span v-on:click="deleteItem(item)" ><i class="fa fa-trash-alt"></i></span>
+                    </div>
+ 
+                </div>
+                <hr class="m-4">
+                <form class="text-center mt-5" v-on:submit.prevent="postNewItem">
+                    <div class="row">
+                        <div class="col-2 text-right">
+                            <span class="new">New: </span>
+                        </div>
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                <input id="new-item" class="form-control" autofocus v-model="newItem">
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text btn btn-success" id="basic-addon2">Save Entry</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        <script src="/js/main.js"></script>
+    </body>
+</html>

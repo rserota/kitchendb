@@ -1,0 +1,48 @@
+body {
+    background-color: ghostwhite;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.list {
+    list-style-type: none;
+    font-size: 18px;
+    padding:0;
+}
+
+.code {
+    position: fixed;
+    top: 3px;
+    right: 3px;
+    z-index:-1;
+    font-size: 14px;
+}
+
+.alert {
+    position: fixed;
+    top: 0;
+    width:100vw;
+}
+
+.new {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.fa-check-circle {
+    color: green;
+}
+
+.sort {
+    cursor: pointer;
+}
