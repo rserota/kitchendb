@@ -6,53 +6,99 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/css/main.css">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
     </head>
     <body>
         <div id="app">
+
+            <!-- alerts/banners go here -->
             <div v-for="alert in alerts" v-cloak class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>{{alert.heading}}</strong> {{alert.body}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="container-fluid">
-                <h1 class="text-center mt-5">Listmaker</h1>
-                <h2 class="text-center mb-5"><em>It's just one thing after another</em></h2>
-                <h2 class="code">Your Code: <a v-cloak v-bind:href="'/?code='+code">{{code}}</a></h2>
-                <div v-show="sortOrder === 1" v-on:click="sortItems" class="text-center m-3 sort">Sort <i class="fa fa-sort-up"></i></div>
-                <div v-show="sortOrder !== 1" v-on:click="sortItems" class="text-center m-3 sort">Sort <i class="fa fa-sort-down"></i></div>
-                <div v-for="item in sortedList" v-cloak class="row">
-                    <div class="col-1 col-md-2"></div>
-                    <div class="col-1 col-md-1 text-right">
-                        <span>Data:</span>
-                    </div>
-                    <div class="col-8 col-md-6 text-right">
-                        <span v-bind:class="{done:item.done}">{{item.text}}</span>
-                        <span v-on:click="completeItem(item)"><i  class="fa fa-check-circle "></i></span>
-                        <span v-on:click="deleteItem(item)" ><i class="fa fa-trash-alt"></i></span>
+            <!-- end alerts/banners -->
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand mr-5" href="#">Kitchendb</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0 mr-auto">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <div id="logged-out-links" class="navbar-nav" v-if="true">
+                        <div class="nav-item">
+                            <div class="nav-link" data-toggle="modal" data-target="#signup-modal">Sign Up</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-link" data-toggle="modal" data-target="#login-modal">Log In</div>
+                        </div>
                     </div>
  
                 </div>
-                <hr class="m-4">
-                <form class="text-center mt-5" v-on:submit.prevent="postNewItem">
-                    <div class="row">
-                        <div class="col-2 text-right">
-                            <span class="new">New: </span>
+            </nav>
+            <!-- End Navbar -->
+      
+            <!-- Signup Modal -->
+            <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="col-8">
-                            <div class="input-group mb-3">
-                                <input id="new-item" class="form-control" autofocus v-model="newItem">
-                                <div class="input-group-append">
-                                    <button type="submit" class="input-group-text btn btn-success" id="basic-addon2">Save Entry</button>
-                                </div>
-                            </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
+            <!-- End signup Modal -->
+ 
+            <!-- Login Modal -->
+            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End login Modal -->
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

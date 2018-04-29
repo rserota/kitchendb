@@ -3,7 +3,7 @@ const bodyParser     = require('body-parser')
 const sessionsModule = require('client-sessions')
 const HTTPS          = require('https')
 const fs             = require('fs')
-const db             = require('./models/db')
+// const db             = require('./models/db')
 const secrets        = require('./secrets')
 const app            = module.exports = express()
 
@@ -11,7 +11,7 @@ global.appRoot = __dirname
 
 
 const sessionMiddleware = sessionsModule({
-    cookieName: '_recruiting_session',  
+    cookieName: '_kitchendb_session',  
     secret: secrets.cookieSecret,
     requestKey: 'session',
     duration: (86400 * 1000) * 7, // one week in milliseconds
@@ -28,7 +28,6 @@ app.use(sessionMiddleware)
 
 app.use(require('./routes/index.router'))
 app.use(require('./routes/user.router'))
-app.use(require('./routes/item.router'))
 require('./routes/error.router')
 
 try {
