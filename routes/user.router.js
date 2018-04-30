@@ -12,13 +12,16 @@ router.post('/user', function(req, res, next){
     console.log('body? ', req.body)
     bcrypt.genSalt(11).then( function(salt) {
         console.log('salt? ', salt)
-        bcrypt.hash(req.body.password, salt).then( function(hashErr, hashedPassword){
-            if (hashErr) { console.log(hashErr) }
+        bcrypt.hash(req.body.password, salt).then( function(hashedPassword){
             console.log('time to save the user')
-            pool.query(`
-                INSERT INTO user
-            `)
-            res.send({todo:'todo'})
+            console.log(hashedPassword)
+            pool.query(
+                ` INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3) `,
+                [req.body.username, req.body.email, hashedPassword]
+            ).then(function(result){
+                console.log('res? ', res)
+                res.send({todo:'todo'})
+            })
         })
     }).catch(function(err){ return next(err) })
 })
