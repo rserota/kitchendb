@@ -6,13 +6,26 @@ var mainVm = new Vue({
     data: {
 
         alerts    : [],
-        signupForm : {},
-        loginForm: {},
+        forms: {
+            signupForm : {
+                username: 'jan',
+                email:'jan.smith@gmail.com',
+                password:'dragons'
+            },
+            loginForm: {},
+        }
     },
     computed: {
 
     },
     methods: {
+        submitSignupForm: function(){
+            axios.post('/user', this.forms.signupForm).then( (response)=>{
+                console.log(response)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log(response)
