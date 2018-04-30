@@ -26,4 +26,9 @@ router.post('/user', function(req, res, next){
     }).catch(function(err){ return next(err) })
 })
 
+router.post('/user/login', function(req, res, next){
+    console.log('body? ', req.body)
+    res.send({todo:'todo'})
+})
+
 module.exports = router

@@ -26,6 +26,13 @@ var mainVm = new Vue({
                 console.log(err)
             })
         },
+        submitLoginForm: function(){
+            axios.post('/user/login', this.forms.loginForm).then( (response)=>{
+                console.log(response)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log(response)
