@@ -12,7 +12,10 @@ var mainVm = new Vue({
                 email:'jan.smith@gmail.com',
                 password:'dragons'
             },
-            loginForm: {},
+            loginForm: {
+                email: 'jan.smith@gmail.com',
+                password:'dragons'
+            },
         }
     },
     computed: {

@@ -9,7 +9,6 @@ const app            = module.exports = express()
 
 global.appRoot = __dirname
 
-
 const sessionMiddleware = sessionsModule({
     cookieName: '_kitchendb_session',  
     secret: secrets.cookieSecret,
@@ -21,10 +20,15 @@ const sessionMiddleware = sessionsModule({
     }
 })
 
+
 app.use(express.static('./public'))
 app.use(bodyParser.json())
 app.use(sessionMiddleware)
 
+app.use(function(req, res, next){
+    console.log('session? ', req.session)
+    next()
+})
 
 app.use(require('./routes/index.router'))
 app.use(require('./routes/user.router'))

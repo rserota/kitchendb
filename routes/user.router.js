@@ -16,7 +16,7 @@ router.post('/user', function(req, res, next){
             console.log('time to save the user')
             console.log(hashedPassword)
             pool.query(
-                ` INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3) `,
+                `INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3)`,
                 [req.body.username, req.body.email, hashedPassword]
             ).then(function(result){
                 console.log('res? ', res)
@@ -27,8 +27,33 @@ router.post('/user', function(req, res, next){
 })
 
 router.post('/user/login', function(req, res, next){
-    console.log('body? ', req.body)
-    res.send({todo:'todo'})
+    pool.query(
+        `SELECT id, username, email, password FROM kdb_user WHERE email=$1`,
+        [req.body.email]
+    ).then(function(result){
+        // found exactly one user! great. 
+        if ( result.rows.length === 1 ) {
+            let theUser = result.rows[0]
+            console.log('user? ', theUser)
+            bcrypt.compare(req.body.password, theUser.password).then( function(matched){
+                console.log('matched? ', matched)
+                if ( !matched ) {
+                    return next(new Error("Login Failed"))
+                }
+                else if ( matched ) {
+                    // the user's password hashed to an exact match of the hash stored in the database
+
+                    // 
+                    req.session.id = theUser.id
+                    res.send({success:'success'})
+                }
+            }).catch(function(bcryptErr){
+                return next(bcryptErr)
+            })
+        }
+        else { return next(new Error("Didn't find a unique user."))}
+
+    })
 })
 
 module.exports = router

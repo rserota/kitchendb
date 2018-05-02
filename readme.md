@@ -1,7 +1,7 @@
 
 # db schema
 
-## user
+## kdb_user
 - id serial primary key
 - username varchar(99)
 - email varchar(99)
