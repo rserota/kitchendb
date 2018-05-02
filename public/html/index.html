@@ -43,12 +43,20 @@
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
-                    <div id="logged-out-links" class="navbar-nav" v-if="true">
+                    <div id="logged-out-links" class="navbar-nav" v-if="!user.id" v-cloak>
                         <div class="nav-item">
                             <div class="nav-link" data-toggle="modal" data-target="#signup-modal">Sign Up</div>
                         </div>
                         <div class="nav-item">
                             <div class="nav-link" data-toggle="modal" data-target="#login-modal">Log In</div>
+                        </div>
+                    </div>
+                    <div id="logged-in-links" class="navbar-nav" v-if="user.id" v-cloak>
+                        <div class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{user.username}}
+                                <img class="profile-pic" src="https://placekitten.com/100/100">
+                            </a>
                         </div>
                     </div>
  

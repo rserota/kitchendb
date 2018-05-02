@@ -1,5 +1,5 @@
 body {
-    background-color: ghostwhite;
+    background-color: rgb(45, 116, 179);
 }
 
 h2 {
@@ -50,3 +50,12 @@ h2 {
 .nav-link {
     cursor: pointer;
 }
+
+.profile-pic {
+    border-radius: 999px;
+    height: 40px;
+    width: 40px;
+}
+
+
+

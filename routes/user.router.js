@@ -5,7 +5,13 @@ const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
 router.get('/user', function(req, res, next){
-    res.send({todo:'todo'})
+    pool.query(
+        `SELECT id, email, username FROM kdb_user WHERE id=$1`,
+        [req.session.id]
+    ).then(function(result){
+        if ( result.rows.length > 0)
+        res.send(result.rows[0])
+    })
 })
 
 router.post('/user', function(req, res, next){

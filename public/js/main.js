@@ -4,7 +4,7 @@ console.log('hello!')
 var mainVm = new Vue({
     el: '#app',
     data: {
-
+        user: {},
         alerts    : [],
         forms: {
             signupForm : {
@@ -39,9 +39,9 @@ var mainVm = new Vue({
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log(response)
-                this.list      = response.data.items
-                this.code      = response.data.code
-                this.sortOrder = response.data.sortOrder
+                if ( response.data.id ) {
+                    this.user = response.data
+                }
             }).catch((err)=>{
                 console.log(err)
             })
