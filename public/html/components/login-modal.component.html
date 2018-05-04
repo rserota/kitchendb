@@ -1,0 +1,35 @@
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" v-on:submit.prevent="$parent.submitLoginForm">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row my-2">
+                        <div class="col-4 mt-2 text-right">
+                            <span>Email</span>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" v-model="$parent.forms.loginForm.email" placeholder="me@here.com">
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-4 mt-2 text-right">
+                            <span>Password</span>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="password" v-model="$parent.forms.loginForm.password" placeholder="$e@5417">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Log In</button>
+            </div>
+        </form>
+    </div>
+</div>
