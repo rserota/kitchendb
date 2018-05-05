@@ -1,11 +1,51 @@
 <div>
-    <h1>Create a dish</h1>
+    <h1 class="text-center kdb-header my-4">Create a dish</h1>
     <form v-on:submit.prevent="$parent.submitDishForm">
         <div class="container">
-            <div class="text-center">
-                <label>Name</label>
-                <input class="form-control" v-model="$parent.forms.createDishForm.name" placeholder="Lasagna">
+            <div class="text-center row my-5">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <label>Name</label>
+                    <input class="form-control" v-model="$parent.forms.createDishForm.name" placeholder="Lasagna">
+                </div>
+
             </div>
+            <div class="text-center row my-5">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <label>Description</label>
+                    <textarea class="form-control" v-model="$parent.forms.createDishForm.description" >
+                    </textarea>
+                </div>
+            </div>
+            <div class="text-center"><label>Ingredients</label></div>
+            <div class="text-center row " v-for="(ingredient, $index) in $parent.forms.createDishForm.ingredients">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <input class="form-control mb-1"  v-model="ingredient.name">
+                </div>
+                <div  class="col-sm-4 text-left">
+                    <span v-on:click="$parent.forms.createDishForm.ingredients.splice($index, 1)">
+                        <i class="fas fa-minus-circle mt-1" ></i>
+                    </span>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+
+                        <button 
+                            class="btn btn-secondary  btn-block mt-4" 
+                            v-on:click="$parent.forms.createDishForm.ingredients.push({name:''})"
+                        >
+                            <label>Add another ingredient</label>
+                            <i class="fas fa-plus-circle " ></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="my-5"></div>
         </div>
     </form>
 </div>

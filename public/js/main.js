@@ -62,7 +62,8 @@ var mainVm = new Vue({
             },
             createDishForm: {
                 name: 'Lasagna',
-                description: "Just like grandma used to make.\n\nServes 3 to 5."
+                description: "Just like grandma used to make.\n\nServes 3 to 5.",
+                ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}]
             }
         }
     },
