@@ -32,6 +32,14 @@ const router = new VueRouter({
             component: {
                 template: '#home-template'
             }
+        },
+        {
+            path: '/create-a-dish',
+            component: function(){
+                return axios.get('/html/components/create-a-dish.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
         }
     ]
 })
@@ -75,6 +83,9 @@ var mainVm = new Vue({
             }).catch((err)=>{
                 console.log(err)
             })
+        },
+        submitCreateDishForm: function(){
+
         },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
