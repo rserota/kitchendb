@@ -14,7 +14,7 @@
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
                     <label>Description</label>
-                    <textarea class="form-control" v-model="$parent.forms.createDishForm.description" >
+                    <textarea rows="5" class="form-control" v-model="$parent.forms.createDishForm.description" >
                     </textarea>
                 </div>
             </div>
@@ -36,14 +36,17 @@
                     <div class="col-sm-4">
 
                         <button 
-                            class="btn btn-secondary  btn-block mt-4" 
+                            class="btn btn-outline-light  btn-block mt-4" 
                             v-on:click="$parent.forms.createDishForm.ingredients.push({name:''})"
                         >
-                            <label>Add another ingredient</label>
+                            <span>Add another ingredient</span>
                             <i class="fas fa-plus-circle " ></i>
                         </button>
                     </div>
                 </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-dark btn-block mt-4 py-3 submit-dish-button" type="submit">Submit</button>
             </div>
             <div class="my-5"></div>
         </div>
