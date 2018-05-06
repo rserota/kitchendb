@@ -86,7 +86,11 @@ var mainVm = new Vue({
             })
         },
         submitCreateDishForm: function(){
-
+            axios.post('/dish', this.forms.createDishForm).then( (response)=>{
+                console.log(response)
+            }).catch((err)=>{
+                console.log(err)
+            })
         },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{

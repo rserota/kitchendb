@@ -1,6 +1,6 @@
 <div>
     <h1 class="text-center kdb-header my-4">Create a dish</h1>
-    <form v-on:submit.prevent="$parent.submitDishForm">
+    <form v-on:submit.prevent="$parent.submitCreateDishForm">
         <div class="container">
             <div class="text-center row my-5">
                 <div class="col-sm-4"></div>
@@ -37,7 +37,7 @@
 
                         <button 
                             class="btn btn-outline-light  btn-block mt-4" 
-                            v-on:click="$parent.forms.createDishForm.ingredients.push({name:''})"
+                            v-on:click.prevent="$parent.forms.createDishForm.ingredients.push({name:''})"
                         >
                             <span>Add another ingredient</span>
                             <i class="fas fa-plus-circle " ></i>
