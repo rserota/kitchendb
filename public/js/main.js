@@ -14,14 +14,14 @@ Vue.component('signup-modal', function(resolve, reject){
         })
     })
 })
-Vue.component('create-a-dish', function(resolve, reject){
-    axios.get('/html/components/create-a-dish.component.html').then(function(response){
-        console.log(response)
-        resolve({
-            template: response.data
-        })
-    })
-})
+// Vue.component('create-a-dish', function(resolve, reject){
+//     axios.get('/html/components/create-a-dish.component.html').then(function(response){
+//         console.log(response)
+//         resolve({
+//             template: response.data
+//         })
+//     })
+// })
 
 
 
@@ -37,6 +37,14 @@ const router = new VueRouter({
             path: '/create-a-dish',
             component: function(){
                 return axios.get('/html/components/create-a-dish.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
+        },
+        {
+            path: '/search-results',
+            component: function(){
+                return axios.get('/html/components/search-results.component.html').then(function(response){
                     return { template: response.data }
                 })
             }
@@ -64,6 +72,9 @@ var mainVm = new Vue({
                 name: 'Lasagna',
                 description: "Just like grandma used to make.\n\nServes 3 to 5.",
                 ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}]
+            },
+            miniSearchForm: {
+                searchTerm: 'lasagna'
             }
         }
     },
@@ -91,6 +102,13 @@ var mainVm = new Vue({
                 this.alerts.push(response.data.alert)
             }).catch((err)=>{
                 console.log(err)
+            })
+        },
+        submitMiniSearchForm: function(){
+            let q = this.forms.miniSearchForm.searchTerm
+            axios.get(`/search/?q=${q}`).then( (response)=>{
+                this.$router.push('search-results')
+                console.log(response)
             })
         },
         getFreshData: function(){

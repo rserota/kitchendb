@@ -1,5 +1,4 @@
 const express = require('express')
-const bcrypt  = require('bcryptjs')
 const gar     = global.appRoot
 const pool    = require(`${gar}/db`)
 const router  = express.Router()
