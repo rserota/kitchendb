@@ -48,9 +48,9 @@ var mainVm = new Vue({
     el: '#app',
     router: router,
     data: {
-        user: {},
-        alerts    : [],
-        forms: {
+        user   : {},
+        alerts : [],
+        forms  : {
             signupForm : {
                 username: 'jan',
                 email:'jan.smith@gmail.com',
@@ -88,6 +88,7 @@ var mainVm = new Vue({
         submitCreateDishForm: function(){
             axios.post('/dish', this.forms.createDishForm).then( (response)=>{
                 console.log(response)
+                this.alerts.push(response.data.alert)
             }).catch((err)=>{
                 console.log(err)
             })

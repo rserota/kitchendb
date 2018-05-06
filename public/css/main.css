@@ -56,6 +56,7 @@ button:hover .fa-plus-circle {
     position: fixed;
     top: 0;
     width:100vw;
+    z-index: 20;
 }
 
 .new {

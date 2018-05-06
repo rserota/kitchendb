@@ -15,14 +15,15 @@ const router  = express.Router()
 // })
 
 router.post('/dish', async function(req, res, next){
-    console.log('body? ', req.body)
+    // console.log('body? ', req.body)
     try {
         const dishInsert = await pool.query(
             `INSERT INTO dish (user_id, name, description) VALUES ($1, $2, $3) RETURNING id`,
             [req.session.id, req.body.name, req.body.description]
         )
         const dish_id = dishInsert.rows[0].id
-        req.body.ingredients.forEach(async function(ingredient){
+        for ( let ingredient of req.body.ingredients ) {
+
             let ingredient_id = null
             const ingredientQuery = await pool.query(
                 `SELECT * FROM ingredient WHERE name=$1`,
@@ -36,7 +37,7 @@ router.post('/dish', async function(req, res, next){
                     `INSERT INTO ingredient (name, description) VALUES ($1, $2) RETURNING id`,
                     [ingredient.name, '...']
                 )
-                console.log('ing ins ', ingredientInsert)
+                // console.log('ing ins ', ingredientInsert)
                 ingredient_id = ingredientInsert.rows[0].id
 
             }
@@ -49,10 +50,28 @@ router.post('/dish', async function(req, res, next){
                 `INSERT INTO ingredient_dish (ingredient_id, dish_id) VALUES ($1, $2)`,
                 [ingredient_id, dish_id]
             )
+        }
+        res.send({
+            success:'success',
+            alert: {
+                heading: "Dish Submitted:",
+                body:  `Successfully added ${req.body.name}.`,
+                class: 'alert-success'
+            }
         })
-        res.send({success:'success'})
     }
     catch(e){
+        console.log(e.constraint)
+        if ( e.constraint === "dish_description_key" ) {
+            res.send({
+                failure: "failure",
+                alert: {
+                    heading: "Dish submission failed:",
+                    body: `That version of ${req.body.name} is already in the database.`,
+                    class: 'alert-danger'
+                }
+            })
+        }
         return next(e)
     }
     
