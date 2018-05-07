@@ -3,6 +3,16 @@ body {
     /* color: white; */
 }
 
+a {
+    color: #0055cc;
+    transition: color .5s;
+}
+
+a:hover {
+    color: black;
+    transition: color .3s;
+}
+
 label {
     color: white;
     margin: 0;
@@ -90,4 +100,8 @@ button:hover .fa-plus-circle {
     max-height: 150px;
     max-width: 150px;
     border-radius: 8px;
+}
+
+.in-block {
+    display: inline-block;
 }

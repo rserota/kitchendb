@@ -48,6 +48,32 @@ const router = new VueRouter({
                     return { template: response.data }
                 })
             }
+        },
+        {
+            path: '/dish/:id',
+            component: function(){
+                return axios.get('/html/components/dish.component.html').then(function(response){
+                    return { 
+                        template: response.data,
+                        data: function(){
+                            return {
+                                dish: {}
+                            }
+                        },
+                        created: function(){
+                            console.log('route id? ', this.$route.params.id)
+                            axios.get('/dish', {
+                                params: {
+                                    id: this.$route.params.id
+                                }
+                            }).then((response)=>{
+                                console.log('response? ', response)
+                                this.dish = response.data
+                            })
+                        }
+                    }
+                })
+            }
         }
     ]
 })
@@ -110,7 +136,7 @@ var mainVm = new Vue({
         submitMiniSearchForm: function(){
             let q = this.forms.miniSearchForm.searchTerm
             axios.get(`/search/?q=${q}`).then( (response)=>{
-                this.$router.push('search-results')
+                this.$router.push('/search-results')
                 this.searchResults.dishByName = response.data
                 console.log(response)
             })

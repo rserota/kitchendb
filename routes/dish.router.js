@@ -3,15 +3,16 @@ const gar     = global.appRoot
 const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
-// router.get('/dish', function(req, res, next){
-//     pool.query(
-//         `SELECT id, email, username FROM kdb_user WHERE id=$1`,
-//         [req.session.id]
-//     ).then(function(result){
-//         if ( result.rows.length > 0)
-//         res.send(result.rows[0])
-//     })
-// })
+router.get('/dish', function(req, res, next){
+    console.log('query?? ', req.query)
+    pool.query(
+        `SELECT * FROM dish WHERE id=$1`,
+        [req.query.id]
+    ).then(function(result){
+        if ( result.rows.length > 0)
+        res.send(result.rows[0])
+    })
+})
 
 router.post('/dish', async function(req, res, next){
     // console.log('body? ', req.body)
