@@ -86,5 +86,8 @@ button:hover .fa-plus-circle {
     width: 40px;
 }
 
-
-
+.dish-thumbnail {
+    max-height: 150px;
+    max-width: 150px;
+    border-radius: 8px;
+}

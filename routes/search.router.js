@@ -7,7 +7,13 @@ const router  = express.Router()
 
 router.get('/search', async function(req, res, next){
     console.log('query? ', req.query)
-    res.send({success:'success'})
+    const dishByName = await pool.query(
+        `SELECT * FROM dish
+        WHERE name ~* $1 
+        ORDER BY name LIMIT 30`,
+        [`.*${req.query.q}.*`]
+    )
+    res.send(dishByName.rows)
 })
 
 

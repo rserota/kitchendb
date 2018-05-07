@@ -76,6 +76,9 @@ var mainVm = new Vue({
             miniSearchForm: {
                 searchTerm: 'lasagna'
             }
+        },
+        searchResults: {
+            dishByName: []
         }
     },
     computed: {
@@ -108,6 +111,7 @@ var mainVm = new Vue({
             let q = this.forms.miniSearchForm.searchTerm
             axios.get(`/search/?q=${q}`).then( (response)=>{
                 this.$router.push('search-results')
+                this.searchResults.dishByName = response.data
                 console.log(response)
             })
         },
@@ -121,6 +125,11 @@ var mainVm = new Vue({
                 console.log(err)
             })
         },
+        truncate: function(str, limit) {
+            if ( !limit ) { limit = 60 }
+            if ( str.length < limit ) { return str }
+            else { return str.slice(0, limit) + '...' }
+        }
     },
     created: function(){
         this.getFreshData()

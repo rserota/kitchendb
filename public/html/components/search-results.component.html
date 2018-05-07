@@ -1,3 +1,22 @@
 <div>
-    <h1>Search Results</h1>
+    <h1 class="text-center kdb-header my-4">Search Results</h1>
+    <div class="container">
+        <div v-for="(dish, $index) in $parent.searchResults.dishByName">
+            <hr v-if="$index">
+            <div class="row " >
+                <div class="col-sm-8">
+
+                    <div class="dishByNameResults">
+                        <div >
+                            <router-link v-bind:to=""><h2>{{dish.name}}</h2></router-link>
+                            <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <img class="dish-thumbnail" src="http://placekitten.com/200/200">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
