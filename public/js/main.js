@@ -61,14 +61,13 @@ const router = new VueRouter({
                             }
                         },
                         created: function(){
-                            console.log('route id? ', this.$route.params.id)
                             axios.get('/dish', {
                                 params: {
                                     id: this.$route.params.id
                                 }
                             }).then((response)=>{
                                 console.log('response? ', response)
-                                console.log('this? ', this)
+                                // console.log('this? ', this)
                                 this.dish = response.data
                             })
                         }
@@ -144,7 +143,7 @@ var mainVm = new Vue({
         },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
-                console.log(response)
+                // console.log(response)
                 if ( response.data.id ) {
                     this.user = response.data
                 }

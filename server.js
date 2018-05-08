@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 app.use(sessionMiddleware)
 
 app.use(function(req, res, next){
-    console.log('session? ', req.session)
+    // console.log('session? ', req.session)
     next()
 })
 
