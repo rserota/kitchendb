@@ -60,16 +60,24 @@ const router = new VueRouter({
                                 dish: {}
                             }
                         },
+                        methods: {
+                            getData : function(){
+                                axios.get('/dish', {
+                                    params: {
+                                        id: this.$route.params.id
+                                    }
+                                }).then((response)=>{
+                                    console.log('response? ', response)
+                                    // console.log('this? ', this)
+                                    this.dish = response.data
+                                })
+                            }
+                        },
                         created: function(){
-                            axios.get('/dish', {
-                                params: {
-                                    id: this.$route.params.id
-                                }
-                            }).then((response)=>{
-                                console.log('response? ', response)
-                                // console.log('this? ', this)
-                                this.dish = response.data
-                            })
+                            this.getData()
+                        },
+                        watch: {
+                            '$route': 'getData'
                         }
                     }
                 })
