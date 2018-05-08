@@ -33,6 +33,7 @@ app.use(function(req, res, next){
 app.use(require('./routes/index.router'))
 app.use(require('./routes/user.router'))
 app.use(require('./routes/dish.router'))
+app.use(require('./routes/menu.router'))
 app.use(require('./routes/search.router'))
 require('./routes/error.router')
 

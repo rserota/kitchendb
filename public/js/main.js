@@ -42,6 +42,14 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/create-a-menu',
+            component: function(){
+                return axios.get('/html/components/create-a-menu.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
+        },
+        {
             path: '/search-results',
             component: function(){
                 return axios.get('/html/components/search-results.component.html').then(function(response){
@@ -108,6 +116,10 @@ var mainVm = new Vue({
                 ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}],
                 preparation: "Weave noodles. Apply cheese. Heat and serve."
             },
+            createMenuForm: {
+                name: "Four course feast",
+                description: "yum yum yum... yum."
+            },
             miniSearchForm: {
                 searchTerm: 'lasagna'
             }
@@ -130,6 +142,14 @@ var mainVm = new Vue({
         submitLoginForm: function(){
             axios.post('/user/login', this.forms.loginForm).then( (response)=>{
                 console.log(response)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        },
+        submitCreateMenuForm: function(){
+            axios.post('/menu', this.forms.createMenuForm).then( (response)=>{
+                console.log(response)
+                this.alerts.push(response.data.alert)
             }).catch((err)=>{
                 console.log(err)
             })
