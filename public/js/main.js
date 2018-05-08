@@ -105,7 +105,8 @@ var mainVm = new Vue({
             createDishForm: {
                 name: 'Lasagna',
                 description: "Just like grandma used to make.\n\nServes 3 to 5.",
-                ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}]
+                ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}],
+                preparation: "Weave noodles. Apply cheese. Heat and serve."
             },
             miniSearchForm: {
                 searchTerm: 'lasagna'

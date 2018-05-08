@@ -1,7 +1,8 @@
-<div>
-    <h1 v-if="dish[0]" class="text-center kdb-header my-4">{{dish[0].name}}</h1>
-
-    <div v-if="dish[0]" class="container">
+<div v-if="dish[0]" class="container white">
+    <h1 class="text-center kdb-header my-4">{{dish[0].name}}</h1>
+    <div class="dish-author text-center">By {{dish[0].username}}</div>
+    <hr>
+    <div class="">
         <div class="row">
             <div class="col-sm-12">
                 <pre>{{dish[0].description}}</pre>
@@ -9,6 +10,7 @@
         </div>
         <div class="row mt-5">
             <div class="col-sm-5">
+                <h2 class="ingredients-heading">Ingredients</h2>
                 <ul class="ingredient-list">
                     <li v-for="ingredient in dish">
                         {{ingredient.ingredient_name}}
@@ -16,7 +18,13 @@
                 </ul>
             </div>
             <div class="col-sm-7 text-center">
-                <img class="dish-img" src="http://placekitten.com/300/300">
+                <img class="dish-img" src="http://lorempixel.com/300/300/food">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <h2 class="text-center">Preparation</h2>
+                <pre>{{dish[0].preparation}}</pre>
             </div>
         </div>
     </div>

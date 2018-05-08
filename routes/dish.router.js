@@ -23,8 +23,8 @@ router.post('/dish', async function(req, res, next){
     // console.log('body? ', req.body)
     try {
         const dishInsert = await pool.query(
-            `INSERT INTO dish (user_id, name, description) VALUES ($1, $2, $3) RETURNING id`,
-            [req.session.id, req.body.name, req.body.description]
+            `INSERT INTO dish (user_id, name, description, preparation) VALUES ($1, $2, $3, $4) RETURNING id`,
+            [req.session.id, req.body.name, req.body.description, req.body.preparation]
         )
         const dish_id = dishInsert.rows[0].id
         for ( let ingredient of req.body.ingredients ) {

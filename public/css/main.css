@@ -5,6 +5,7 @@ body {
 
 pre, p {
     font-family: sans-serif;
+    color: inherit;
 }
 
 a {
@@ -18,7 +19,7 @@ a:hover {
 }
 
 label {
-    color: white;
+    color: #f8f9fa;
     margin: 0;
 }
 
@@ -31,7 +32,7 @@ h2 {
 }
 
 .kdb-header {
-    color: white;
+    color: #f8f9fa;
 }
 
 .list {
@@ -42,7 +43,7 @@ h2 {
 
 
 .fa-plus-circle {
-    color: white;
+    color: #f8f9fa;
     font-size: 26px;
     position: relative;
     top: 3px;
@@ -78,9 +79,6 @@ button:hover .fa-plus-circle {
     font-size: 18px;
 }
 
-.done {
-    text-decoration: line-through;
-}
 
 .fa-check-circle {
     color: green;
@@ -112,8 +110,21 @@ button:hover .fa-plus-circle {
     border-radius: 8px;
 }
 
+.dish-author {
+    color: #f8f9fa;
+
+}
 .ingredient-list {
-    
+    list-style-type: initial;    
+}
+
+.ingredients-heading {
+    color: #f8f9fa;
+    font-size: 28px;
+}
+
+.white {
+    color: #f8f9fa;
 }
 
 .in-block {
