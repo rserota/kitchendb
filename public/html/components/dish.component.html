@@ -7,12 +7,16 @@
                 <pre>{{dish[0].description}}</pre>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-5">
-
+                <ul class="ingredient-list">
+                    <li v-for="ingredient in dish">
+                        {{ingredient.ingredient_name}}
+                    </li>
+                </ul>
             </div>
             <div class="col-sm-7 text-center">
-                <img src="http://placekitten.com/200/200">
+                <img class="dish-img" src="http://placekitten.com/300/300">
             </div>
         </div>
     </div>

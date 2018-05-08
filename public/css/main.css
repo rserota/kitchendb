@@ -3,6 +3,10 @@ body {
     /* color: white; */
 }
 
+pre, p {
+    font-family: sans-serif;
+}
+
 a {
     color: #0055cc;
     transition: color .5s;
@@ -96,10 +100,20 @@ button:hover .fa-plus-circle {
     width: 40px;
 }
 
-.dish-thumbnail {
+.dish-thumbnail-img {
     max-height: 150px;
     max-width: 150px;
     border-radius: 8px;
+}
+
+.dish-img {
+    max-height: 300px;
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+.ingredient-list {
+    
 }
 
 .in-block {
