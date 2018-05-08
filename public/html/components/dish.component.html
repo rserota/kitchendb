@@ -1,7 +1,20 @@
 <div>
-    <h1 class="text-center kdb-header my-4">{{dish.name}}</h1>
-    <div class="container">
-       
+    <h1 v-if="dish[0]" class="text-center kdb-header my-4">{{dish[0].name}}</h1>
+
+    <div v-if="dish[0]" class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <pre>{{dish[0].description}}</pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+
+            </div>
+            <div class="col-sm-7 text-center">
+                <img src="http://placekitten.com/200/200">
+            </div>
+        </div>
     </div>
     <div class="my-5"></div>
 </div>

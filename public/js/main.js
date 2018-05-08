@@ -1,6 +1,6 @@
 Vue.component('login-modal', function(resolve, reject){
     axios.get('/html/components/login-modal.component.html').then(function(response){
-        console.log(response)
+        // console.log(response)
         resolve({
             template: response.data
         })
@@ -8,7 +8,7 @@ Vue.component('login-modal', function(resolve, reject){
 })
 Vue.component('signup-modal', function(resolve, reject){
     axios.get('/html/components/signup-modal.component.html').then(function(response){
-        console.log(response)
+        // console.log(response)
         resolve({
             template: response.data
         })
@@ -68,6 +68,7 @@ const router = new VueRouter({
                                 }
                             }).then((response)=>{
                                 console.log('response? ', response)
+                                console.log('this? ', this)
                                 this.dish = response.data
                             })
                         }

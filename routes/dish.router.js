@@ -6,11 +6,14 @@ const router  = express.Router()
 router.get('/dish', function(req, res, next){
     console.log('query?? ', req.query)
     pool.query(
-        `SELECT * FROM dish WHERE id=$1`,
+        `SELECT dish.*, kdb_user.username FROM dish 
+        LEFT JOIN kdb_user on dish.user_id=kdb_user.id
+
+        WHERE dish.id=$1`,
         [req.query.id]
     ).then(function(result){
-        if ( result.rows.length > 0)
-        res.send(result.rows[0])
+        console.log('dish result? ', result)
+        res.send(result.rows)
     })
 })
 
