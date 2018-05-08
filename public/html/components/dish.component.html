@@ -1,5 +1,22 @@
 <div v-if="dish[0]" class="container white">
-    <h1 class="text-center kdb-header my-4">{{dish[0].name}}</h1>
+    <h1 class="text-center kdb-header my-4">
+        {{dish[0].name}}
+        <span class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-success">Action</button>
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+            </div>
+        </span>
+    </h1>
     <div class="dish-author text-center">By {{dish[0].username}}</div>
     <hr>
     <div class="">
@@ -21,7 +38,7 @@
                 <img class="dish-img" src="http://lorempixel.com/300/300/food">
             </div>
         </div>
-        <div class="row mt-5">
+        <div v-if="dish[0].preparation" class="row mt-5">
             <div class="col-sm-12">
                 <h2 class="text-center">Preparation</h2>
                 <pre>{{dish[0].preparation}}</pre>

@@ -36,7 +36,17 @@ router.post('/menu', async function(req, res, next){
         })
     }
     catch(e){
-        return next(e)
+        if ( e.constraint === 'menu_name_key' ) {
+            res.send({
+                failure: "failure",
+                alert: {
+                    heading: "Menu submission failed:",
+                    body: `${req.body.name} is already in the database.`,
+                    class: 'alert-danger'
+                }
+            })
+        }
+        else { return next(e) }
     }
     
 

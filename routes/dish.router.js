@@ -77,7 +77,7 @@ router.post('/dish', async function(req, res, next){
                 }
             })
         }
-        return next(e)
+        else { return next(e) }
     }
     
 

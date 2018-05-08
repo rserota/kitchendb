@@ -41,6 +41,21 @@ h2 {
     padding:0;
 }
 
+.btn-success, .btn-danger, btn-outline-success:hover {
+    color: #f8f9fa;
+}
+.btn-outline-success {
+    color: #089c2a;
+    border-color: #089c2a;
+}
+.btn-outline-success:hover {
+    border-color: #089c2a;
+    background-color: #089c2a;
+}
+.btn-success{
+    border-color: #068e25;
+    background-color: #089c2a;
+}
 
 .fa-plus-circle {
     color: #f8f9fa;
@@ -129,4 +144,12 @@ button:hover .fa-plus-circle {
 
 .in-block {
     display: inline-block;
+}
+
+.mini-search-form input {
+    min-width: 30vw;
+}
+
+.pull-right {
+    float: right;
 }
