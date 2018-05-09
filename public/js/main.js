@@ -93,6 +93,35 @@ const router = new VueRouter({
                     }
                 })
             }
+        },
+        {
+            path: '/menu/:id',
+            component: function(){
+                return axios.get('/html/components/menu.component.html').then(function(response){
+                    return { 
+                        template: response.data,
+                        methods: {
+                            getData : function(){
+                                axios.get('/menu', {
+                                    params: {
+                                        id: this.$route.params.id
+                                    }
+                                }).then((response)=>{
+                                    console.log('response? ', response)
+                                    // console.log('this? ', this)
+                                    this.$parent.menu = response.data
+                                })
+                            }
+                        },
+                        created: function(){
+                            this.getData()
+                        },
+                        watch: {
+                            '$route': 'getData'
+                        }
+                    }
+                })
+            }
         }
     ]
 })

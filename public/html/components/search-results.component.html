@@ -8,13 +8,13 @@
 
                     <div class="dishByNameResults">
                         <div >
-                            <router-link v-bind:to="'dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
+                            <router-link v-bind:to="'/dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
                             <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <router-link v-bind:to="'dish/' + dish.id"><img class="dish-thumbnail-img" src="http://lorempixel.com/200/200/food"></router-link>
+                    <router-link v-bind:to="'/dish/' + dish.id"><img class="dish-thumbnail-img" src="http://lorempixel.com/200/200/food"></router-link>
                 </div>
             </div>
         </div>

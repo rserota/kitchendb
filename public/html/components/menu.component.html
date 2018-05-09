@@ -1,0 +1,36 @@
+<div v-if="$parent.menu[0]" class="container white">
+    <h1 class="text-center kdb-header my-4 relative">
+        {{$parent.menu[0].name}}
+        <span class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            </div>
+        </span>
+    </h1>
+    <div class="dish-author text-center">By {{$parent.menu[0].username}}</div>
+    <hr>
+    <div class="">
+        <div class="row">
+            <div class="col-sm-12">
+                <pre>{{$parent.menu[0].description}}</pre>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-5">
+                <h2 class="dish-heading">Dishes</h2>
+                <ul class="dish-list">
+                    <li v-for="dish in $parent.menu">
+                        {{dish.dish_name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-7 text-center">
+                <img class="dish-img" src="https://placekitten.com/200/200">
+            </div>
+        </div>
+    </div>
+    <div class="my-5"></div>
+</div>

@@ -62,7 +62,7 @@ router.put('/menu/:menu_id', async function(req, res, next){
             success: 'success', 
             alert: {
                 heading: "Dish added successfully:",
-                body: `${req.body.dish.name} was added to ${req.body.menu.menu_name}.s`,
+                body: `${req.body.dish.name} was added to ${req.body.menu.menu_name}.`,
                 class: 'alert-success'
             }
         })

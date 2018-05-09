@@ -119,7 +119,7 @@ button:hover .fa-plus-circle {
     border-radius: 8px;
 }
 
-.dish-img .menu-img {
+.dish-img, .menu-img {
     max-height: 300px;
     max-width: 300px;
     border-radius: 8px;
