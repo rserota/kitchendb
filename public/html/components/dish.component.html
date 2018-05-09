@@ -1,6 +1,6 @@
-<div v-if="dish[0]" class="container white">
-    <h1 class="text-center kdb-header my-4">
-        {{dish[0].name}}
+<div v-if="$parent.dish[0]" class="container white">
+    <h1 class="text-center kdb-header my-4 relative">
+        {{$parent.dish[0].name}}
         <span class="pull-right">
             <div class="btn-group">
                 <button type="button" class="btn btn-success">Save</button>
@@ -8,40 +8,42 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <span 
+                        v-for="menu in $parent.menus" 
+                        v-on:click="$parent.addDishToMenu(menu)"
+                        class="dropdown-item" 
+                    >Add to {{menu.menu_name}}</span>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+                    <span class="dropdown-item">Add to Favorites</span>
                 </div>
             </div>
         </span>
     </h1>
-    <div class="dish-author text-center">By {{dish[0].username}}</div>
+    <div class="dish-author text-center">By {{$parent.dish[0].username}}</div>
     <hr>
     <div class="">
         <div class="row">
             <div class="col-sm-12">
-                <pre>{{dish[0].description}}</pre>
+                <pre>{{$parent.dish[0].description}}</pre>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-sm-5">
                 <h2 class="ingredients-heading">Ingredients</h2>
                 <ul class="ingredient-list">
-                    <li v-for="ingredient in dish">
+                    <li v-for="ingredient in $parent.dish">
                         {{ingredient.ingredient_name}}
                     </li>
                 </ul>
             </div>
             <div class="col-sm-7 text-center">
-                <img class="dish-img" src="http://lorempixel.com/300/300/food">
+                <img class="dish-img" src="https://placekitten.com/200/200">
             </div>
         </div>
-        <div v-if="dish[0].preparation" class="row mt-5">
+        <div v-if="$parent.dish[0].preparation" class="row mt-5">
             <div class="col-sm-12">
                 <h2 class="text-center">Preparation</h2>
-                <pre>{{dish[0].preparation}}</pre>
+                <pre>{{$parent.dish[0].preparation}}</pre>
             </div>
         </div>
     </div>

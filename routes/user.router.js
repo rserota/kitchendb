@@ -15,13 +15,13 @@ router.get('/user', function(req, res, next){
     `, 
     [req.session.id]
     ).then(function(result){
-        console.log('result? ', result)
+        // console.log('result? ', result)
         res.send(result.rows)
     })
 })
 
 router.post('/user', function(req, res, next){
-    console.log('body? ', req.body)
+    console.log('new user body? ', req.body)
     bcrypt.genSalt(11).then( function(salt) {
         console.log('salt? ', salt)
         bcrypt.hash(req.body.password, salt).then( function(hashedPassword){

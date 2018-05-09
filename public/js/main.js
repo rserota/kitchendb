@@ -63,11 +63,6 @@ const router = new VueRouter({
                 return axios.get('/html/components/dish.component.html').then(function(response){
                     return { 
                         template: response.data,
-                        data: function(){
-                            return {
-                                dish: {}
-                            }
-                        },
                         methods: {
                             getData : function(){
                                 axios.get('/dish', {
@@ -77,7 +72,7 @@ const router = new VueRouter({
                                 }).then((response)=>{
                                     console.log('response? ', response)
                                     // console.log('this? ', this)
-                                    this.dish = response.data
+                                    this.$parent.dish = response.data
                                 })
                             }
                         },
@@ -99,6 +94,8 @@ var mainVm = new Vue({
     router: router,
     data: {
         user   : {},
+        dish   : [],
+        menus  : [],
         alerts : [],
         forms  : {
             signupForm : {
@@ -170,11 +167,22 @@ var mainVm = new Vue({
                 console.log(response)
             })
         },
+        addDishToMenu: function(menu){
+            axios.put(`/menu/${menu.menu_id}`, {dish:this.dish[0],menu}).then( (response)=>{
+                console.log('resonse? ', response)
+                this.alerts.push(response.data.alert)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log(response)
                 if ( response.data[0].id ) {
                     this.user = response.data[0]
+                }
+                if ( response.data[0].menu_id ) {
+                    this.menus = response.data
                 }
             }).catch((err)=>{
                 console.log(err)

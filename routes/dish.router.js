@@ -4,7 +4,7 @@ const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
 router.get('/dish', function(req, res, next){
-    console.log('query?? ', req.query)
+    // console.log('query?? ', req.query)
     pool.query(
         `SELECT dish.*, ingredient.name AS ingredient_name, kdb_user.username AS username
         FROM dish 
@@ -14,7 +14,7 @@ router.get('/dish', function(req, res, next){
         WHERE dish.id=$1`,
         [req.query.id]
     ).then(function(result){
-        console.log('dish result? ', result.rows)
+        // console.log('dish result? ', result.rows)
         res.send(result.rows)
     })
 })

@@ -151,5 +151,14 @@ button:hover .fa-plus-circle {
 }
 
 .pull-right {
-    float: right;
+    position: absolute;
+    right: 0;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.relative {
+    position: relative;
 }

@@ -29,7 +29,6 @@
 - user_id integer references kdb_user(id)
 - name varchar(99) not null unique
 - description varchar(999) not null unique
-- published boolean not null
 
  ## menu_dish
  - id serial primary key 

@@ -20,7 +20,7 @@ const router  = express.Router()
 // })
 
 router.post('/menu', async function(req, res, next){
-    console.log('body? ', req.body)
+    // console.log('body? ', req.body)
     try {
         const menuInsert = await pool.query(
             `INSERT INTO menu (user_id, name, description) VALUES ($1, $2, $3) RETURNING id`,
@@ -49,7 +49,39 @@ router.post('/menu', async function(req, res, next){
         else { return next(e) }
     }
     
+})
 
+router.put('/menu/:menu_id', async function(req, res, next){
+    // console.log('body? ', req.body)
+    try {
+        const menu_dishInsert = await pool.query(
+            `INSERT INTO menu_dish (menu_id, dish_id) VALUES ($1, $2)`,
+            [req.params.menu_id, req.body.dish.id]
+        )
+        res.send({
+            success: 'success', 
+            alert: {
+                heading: "Dish added successfully:",
+                body: `${req.body.dish.name} was added to ${req.body.menu.menu_name}.s`,
+                class: 'alert-success'
+            }
+        })
+            
+    }
+    catch(e){
+        console.log('e?', e)
+        if ( e.constraint === "menu_dish_menu_id_dish_id_key" ) {
+            res.send({
+                failure: "failure",
+                alert: {
+                    heading: "Dish addition failed:",
+                    body: `${req.body.dish.name} has already been added to ${req.body.menu.menu_name}.`,
+                    class: 'alert-danger'
+                }
+            })
+        }
+        return next(e)
+    }
 })
 
 
