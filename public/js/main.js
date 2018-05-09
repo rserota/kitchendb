@@ -172,9 +172,9 @@ var mainVm = new Vue({
         },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
-                // console.log(response)
-                if ( response.data.id ) {
-                    this.user = response.data
+                console.log(response)
+                if ( response.data[0].id ) {
+                    this.user = response.data[0]
                 }
             }).catch((err)=>{
                 console.log(err)

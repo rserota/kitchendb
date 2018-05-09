@@ -40,7 +40,9 @@ SET default_with_oids = false;
 CREATE TABLE public.dish (
     id integer NOT NULL,
     name character varying(99) NOT NULL,
-    description character varying(999) NOT NULL
+    description character varying(999) NOT NULL,
+    user_id integer,
+    preparation character varying(9999)
 );
 
 
@@ -139,13 +141,50 @@ ALTER SEQUENCE public.ingredient_id_seq OWNED BY public.ingredient.id;
 
 
 --
+-- Name: kdb_user; Type: TABLE; Schema: public; Owner: raphael
+--
+
+CREATE TABLE public.kdb_user (
+    id integer NOT NULL,
+    username character varying(99) NOT NULL,
+    email character varying(99) NOT NULL,
+    password character varying(999) NOT NULL
+);
+
+
+ALTER TABLE public.kdb_user OWNER TO raphael;
+
+--
+-- Name: kdb_user_id_seq; Type: SEQUENCE; Schema: public; Owner: raphael
+--
+
+CREATE SEQUENCE public.kdb_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.kdb_user_id_seq OWNER TO raphael;
+
+--
+-- Name: kdb_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: raphael
+--
+
+ALTER SEQUENCE public.kdb_user_id_seq OWNED BY public.kdb_user.id;
+
+
+--
 -- Name: menu; Type: TABLE; Schema: public; Owner: raphael
 --
 
 CREATE TABLE public.menu (
     id integer NOT NULL,
     name character varying(99) NOT NULL,
-    description character varying(999) NOT NULL
+    description character varying(999) NOT NULL,
+    user_id integer
 );
 
 
@@ -230,6 +269,13 @@ ALTER TABLE ONLY public.ingredient_dish ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: kdb_user id; Type: DEFAULT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.kdb_user ALTER COLUMN id SET DEFAULT nextval('public.kdb_user_id_seq'::regclass);
+
+
+--
 -- Name: menu id; Type: DEFAULT; Schema: public; Owner: raphael
 --
 
@@ -247,7 +293,12 @@ ALTER TABLE ONLY public.menu_dish ALTER COLUMN id SET DEFAULT nextval('public.me
 -- Data for Name: dish; Type: TABLE DATA; Schema: public; Owner: raphael
 --
 
-COPY public.dish (id, name, description) FROM stdin;
+COPY public.dish (id, name, description, user_id, preparation) FROM stdin;
+23	Lasagna	Just like grandma used to make.\n\nServes 3 to 5.	3	\N
+29	Lasagna	Just like grandma used to make.\n\nServes 3 to 25.	3	\N
+30	noodle tower	enormous!\n\n\n\nwow.	3	\N
+31	Jon's bonbons	very sweet!	5	\N
+32	pudding	it's just the best!	3	Weave noodles. Apply cheese. Heat and serve.
 \.
 
 
@@ -256,6 +307,13 @@ COPY public.dish (id, name, description) FROM stdin;
 --
 
 COPY public.ingredient (id, name, description) FROM stdin;
+13	four gallons of shredded cheese	...
+14	pallet of noodles	...
+15	extra noodles	...
+16	lots of chocolate	...
+17	vat of sugar	...
+18	pud	...
+19	ding	...
 \.
 
 
@@ -264,6 +322,27 @@ COPY public.ingredient (id, name, description) FROM stdin;
 --
 
 COPY public.ingredient_dish (id, ingredient_id, dish_id) FROM stdin;
+16	13	23
+17	14	23
+18	13	29
+19	14	29
+20	13	30
+21	14	30
+22	15	30
+23	16	31
+24	17	31
+25	18	32
+26	19	32
+\.
+
+
+--
+-- Data for Name: kdb_user; Type: TABLE DATA; Schema: public; Owner: raphael
+--
+
+COPY public.kdb_user (id, username, email, password) FROM stdin;
+3	jan	jan.smith@gmail.com	$2a$11$qn3aMM.2kFb3gciLslaCDOD6.P.AufXccyIapwLekRr6AQmZ17YwC
+5	jon	jon.smith@gmail.com	$2a$11$wQET4jLRlvBE0bK4NqxBbe0KutIh87SSSJYjLARwnO4vA9P4sBbWC
 \.
 
 
@@ -271,7 +350,8 @@ COPY public.ingredient_dish (id, ingredient_id, dish_id) FROM stdin;
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: raphael
 --
 
-COPY public.menu (id, name, description) FROM stdin;
+COPY public.menu (id, name, description, user_id) FROM stdin;
+1	Four course feast	yum yum yum... yum.	3
 \.
 
 
@@ -287,21 +367,28 @@ COPY public.menu_dish (id, menu_id, dish_id) FROM stdin;
 -- Name: dish_id_seq; Type: SEQUENCE SET; Schema: public; Owner: raphael
 --
 
-SELECT pg_catalog.setval('public.dish_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dish_id_seq', 32, true);
 
 
 --
 -- Name: ingredient_dish_id_seq; Type: SEQUENCE SET; Schema: public; Owner: raphael
 --
 
-SELECT pg_catalog.setval('public.ingredient_dish_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ingredient_dish_id_seq', 26, true);
 
 
 --
 -- Name: ingredient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: raphael
 --
 
-SELECT pg_catalog.setval('public.ingredient_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ingredient_id_seq', 19, true);
+
+
+--
+-- Name: kdb_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: raphael
+--
+
+SELECT pg_catalog.setval('public.kdb_user_id_seq', 5, true);
 
 
 --
@@ -315,7 +402,7 @@ SELECT pg_catalog.setval('public.menu_dish_id_seq', 1, false);
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: raphael
 --
 
-SELECT pg_catalog.setval('public.menu_id_seq', 1, false);
+SELECT pg_catalog.setval('public.menu_id_seq', 3, true);
 
 
 --
@@ -327,27 +414,11 @@ ALTER TABLE ONLY public.dish
 
 
 --
--- Name: dish dish_name_key; Type: CONSTRAINT; Schema: public; Owner: raphael
---
-
-ALTER TABLE ONLY public.dish
-    ADD CONSTRAINT dish_name_key UNIQUE (name);
-
-
---
 -- Name: dish dish_pkey; Type: CONSTRAINT; Schema: public; Owner: raphael
 --
 
 ALTER TABLE ONLY public.dish
     ADD CONSTRAINT dish_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingredient ingredient_description_key; Type: CONSTRAINT; Schema: public; Owner: raphael
---
-
-ALTER TABLE ONLY public.ingredient
-    ADD CONSTRAINT ingredient_description_key UNIQUE (description);
 
 
 --
@@ -372,6 +443,30 @@ ALTER TABLE ONLY public.ingredient
 
 ALTER TABLE ONLY public.ingredient
     ADD CONSTRAINT ingredient_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kdb_user kdb_user_email_key; Type: CONSTRAINT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.kdb_user
+    ADD CONSTRAINT kdb_user_email_key UNIQUE (email);
+
+
+--
+-- Name: kdb_user kdb_user_password_key; Type: CONSTRAINT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.kdb_user
+    ADD CONSTRAINT kdb_user_password_key UNIQUE (password);
+
+
+--
+-- Name: kdb_user kdb_user_pkey; Type: CONSTRAINT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.kdb_user
+    ADD CONSTRAINT kdb_user_pkey PRIMARY KEY (id);
 
 
 --
@@ -407,6 +502,14 @@ ALTER TABLE ONLY public.menu
 
 
 --
+-- Name: dish dish_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.dish
+    ADD CONSTRAINT dish_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.kdb_user(id);
+
+
+--
 -- Name: ingredient_dish ingredient_dish_dish_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: raphael
 --
 
@@ -436,6 +539,14 @@ ALTER TABLE ONLY public.menu_dish
 
 ALTER TABLE ONLY public.menu_dish
     ADD CONSTRAINT menu_dish_menu_id_fkey FOREIGN KEY (menu_id) REFERENCES public.menu(id);
+
+
+--
+-- Name: menu menu_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: raphael
+--
+
+ALTER TABLE ONLY public.menu
+    ADD CONSTRAINT menu_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.kdb_user(id);
 
 
 --

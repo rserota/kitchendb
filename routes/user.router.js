@@ -5,12 +5,18 @@ const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
 router.get('/user', function(req, res, next){
-    pool.query(
-        `SELECT id, email, username FROM kdb_user WHERE id=$1`,
-        [req.session.id]
+    pool.query( `
+        SELECT kdb_user.id AS id, kdb_user.email AS email, kdb_user.username AS username,
+            menu.id AS menu_id, menu.name AS menu_name
+        FROM kdb_user 
+        LEFT JOIN menu ON kdb_user.id=menu.user_id
+        WHERE kdb_user.id=$1
+
+    `, 
+    [req.session.id]
     ).then(function(result){
-        if ( result.rows.length > 0)
-        res.send(result.rows[0])
+        console.log('result? ', result)
+        res.send(result.rows)
     })
 })
 
