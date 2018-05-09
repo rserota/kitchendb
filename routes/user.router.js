@@ -7,7 +7,7 @@ const router  = express.Router()
 router.get('/user', function(req, res, next){
     pool.query( `
         SELECT kdb_user.id AS id, kdb_user.email AS email, kdb_user.username AS username,
-            menu.id AS menu_id, menu.name AS menu_name
+            menu.id AS menu_id, menu.name AS menu_name, menu.description AS menu_description
         FROM kdb_user 
         LEFT JOIN menu ON kdb_user.id=menu.user_id
         WHERE kdb_user.id=$1

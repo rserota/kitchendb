@@ -1,0 +1,23 @@
+<div>
+    <h1 class="text-center kdb-header my-4">My Menus</h1>
+    <div class="container">
+        <div v-for="(menu, $index) in $parent.menus">
+            <hr v-if="$index">
+            <div class="row " >
+                <div class="col-sm-8">
+
+                    <div class="dishByNameResults">
+                        <div >
+                            <router-link v-bind:to="'menu/' + menu.id"><h2 class="in-block">{{menu.menu_name}}</h2></router-link>
+                            <pre><p>{{$parent.truncate(menu.menu_description)}}</p></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <router-link v-bind:to="'menu/' + menu.id"><img class="menu-thumbnail-img" src="http://placekitten.com/200/200/"></router-link>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-5"></div>
+</div>

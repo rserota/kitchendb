@@ -113,13 +113,13 @@ button:hover .fa-plus-circle {
     width: 40px;
 }
 
-.dish-thumbnail-img {
+.dish-thumbnail-img, .menu-thumbnail-img {
     max-height: 150px;
     max-width: 150px;
     border-radius: 8px;
 }
 
-.dish-img {
+.dish-img .menu-img {
     max-height: 300px;
     max-width: 300px;
     border-radius: 8px;

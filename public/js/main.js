@@ -50,6 +50,14 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/my-menus',
+            component: function(){
+                return axios.get('/html/components/my-menus.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
+        },
+        {
             path: '/search-results',
             component: function(){
                 return axios.get('/html/components/search-results.component.html').then(function(response){
