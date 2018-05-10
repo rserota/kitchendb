@@ -78,7 +78,7 @@ const router = new VueRouter({
                                         id: this.$route.params.id
                                     }
                                 }).then((response)=>{
-                                    console.log('response? ', response)
+                                    // console.log('response? ', response)
                                     // console.log('this? ', this)
                                     this.$parent.dish = response.data
                                 })
@@ -107,7 +107,7 @@ const router = new VueRouter({
                                         id: this.$route.params.id
                                     }
                                 }).then((response)=>{
-                                    console.log('response? ', response)
+                                    console.log('menu response? ', response)
                                     // console.log('this? ', this)
                                     this.$parent.menu = response.data
                                 })
@@ -132,7 +132,8 @@ var mainVm = new Vue({
     data: {
         user   : {},
         dish   : [],
-        menus  : [],
+        menu   : [], // all dishes for a single menu
+        menus  : [], // list of menus e.g. in my-menus
         alerts : [],
         forms  : {
             signupForm : {
@@ -169,6 +170,9 @@ var mainVm = new Vue({
         submitSignupForm: function(){
             axios.post('/user', this.forms.signupForm).then( (response)=>{
                 console.log(response)
+                this.alerts.push(response.data.alert)
+                $('#signup-modal').modal('hide')
+                this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
             })
@@ -176,6 +180,9 @@ var mainVm = new Vue({
         submitLoginForm: function(){
             axios.post('/user/login', this.forms.loginForm).then( (response)=>{
                 console.log(response)
+                if ( response.data.alert ) { this.alerts.push(response.data.alert) }
+                $('#login-modal').modal('hide')
+                this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
             })
@@ -184,6 +191,7 @@ var mainVm = new Vue({
             axios.post('/menu', this.forms.createMenuForm).then( (response)=>{
                 console.log(response)
                 this.alerts.push(response.data.alert)
+                this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
             })
@@ -208,13 +216,14 @@ var mainVm = new Vue({
             axios.put(`/menu/${menu.menu_id}`, {dish:this.dish[0],menu}).then( (response)=>{
                 console.log('resonse? ', response)
                 this.alerts.push(response.data.alert)
+                // this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
             })
         },
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
-                console.log(response)
+                console.log('the user? ', response)
                 if ( response.data[0].id ) {
                     this.user = response.data[0]
                 }

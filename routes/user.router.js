@@ -28,11 +28,19 @@ router.post('/user', function(req, res, next){
             console.log('time to save the user')
             console.log(hashedPassword)
             pool.query(
-                `INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3)`,
+                `INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3) RETURNING id`,
                 [req.body.username, req.body.email, hashedPassword]
             ).then(function(result){
-                console.log('res? ', res)
-                res.send({todo:'todo'})
+                console.log("reeeesult: ", result)
+                req.session.id = result.rows[0].id
+                res.send({
+                    success:'success',
+                    alert: {
+                        heading: "Account created:",
+                        body:  `Now you can share your recipes with other users.`,
+                        class: 'alert-success'
+                    }
+                })
             })
         })
     }).catch(function(err){ return next(err) })

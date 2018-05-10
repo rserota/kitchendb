@@ -14,7 +14,7 @@ a {
 }
 
 a:hover {
-    color: black;
+    color: #f8f9fa;
     transition: color .3s;
 }
 
@@ -86,7 +86,7 @@ button:hover .fa-plus-circle {
     position: fixed;
     top: 0;
     width:100vw;
-    z-index: 20;
+    z-index: 99999;
 }
 
 .new {

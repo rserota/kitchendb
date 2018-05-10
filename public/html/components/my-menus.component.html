@@ -6,15 +6,15 @@
             <div class="row " >
                 <div class="col-sm-8">
 
-                    <div class="dishByNameResults">
+                    <div class="menuResults">
                         <div >
-                            <router-link v-bind:to="'menu/' + menu.id"><h2 class="in-block">{{menu.menu_name}}</h2></router-link>
+                            <router-link v-bind:to="'/menu/' + menu.menu_id"><h2 class="in-block">{{menu.menu_name}}</h2></router-link>
                             <pre><p>{{$parent.truncate(menu.menu_description)}}</p></pre>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <router-link v-bind:to="'menu/' + menu.id"><img class="menu-thumbnail-img" src="http://placekitten.com/200/200/"></router-link>
+                    <router-link v-bind:to="'/menu/' + menu.menu_id"><img class="menu-thumbnail-img" src="http://placekitten.com/200/200/"></router-link>
                 </div>
             </div>
         </div>

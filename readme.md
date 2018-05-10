@@ -35,7 +35,10 @@
  - menu_id integer references menu(id)
  - dish_id integer references dish(id)
 
-
+## favorite_dish
+- id serial primary key
+- dish_id integer references dish(id)
+- user_id integer references kdb_user(id)
 
 # search functionality
 

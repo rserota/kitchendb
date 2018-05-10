@@ -3,21 +3,21 @@ const gar     = global.appRoot
 const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
-// router.get('/dish', function(req, res, next){
-//     console.log('query?? ', req.query)
-//     pool.query(
-//         `SELECT dish.*, ingredient.name AS ingredient_name, kdb_user.username AS username
-//         FROM dish 
-//         INNER JOIN ingredient_dish ON dish.id=ingredient_dish.dish_id
-//         INNER JOIN ingredient ON ingredient.id=ingredient_dish.ingredient_id
-//         LEFT JOIN kdb_user ON kdb_user.id=dish.user_id
-//         WHERE dish.id=$1`,
-//         [req.query.id]
-//     ).then(function(result){
-//         console.log('dish result? ', result.rows)
-//         res.send(result.rows)
-//     })
-// })
+router.get('/menu', function(req, res, next){
+    console.log('query?? ', req.query)
+    pool.query(
+        `SELECT menu.*, dish.name AS dish_name, dish.id AS dish_id, kdb_user.username AS username
+        FROM menu 
+        INNER JOIN menu_dish ON menu.id=menu_dish.menu_id
+        INNER JOIN dish ON dish.id=menu_dish.dish_id
+        LEFT JOIN kdb_user ON kdb_user.id=dish.user_id
+        WHERE menu.id=$1`,
+        [req.query.id]
+    ).then(function(result){
+        console.log('menu result? ', result.rows)
+        res.send(result.rows)
+    })
+})
 
 router.post('/menu', async function(req, res, next){
     // console.log('body? ', req.body)
