@@ -22,7 +22,7 @@ router.get('/search', async function(req, res, next){
     else if ( searchBy === 'ingredient' ) {
         console.log('search by ingredient')
         const dishByIngredient = await pool.query(
-            `SELECT * 
+            `SELECT DISTINCT dish.*
             FROM dish
             INNER JOIN ingredient_dish ON dish.id=ingredient_dish.dish_id
             INNER JOIN ingredient ON ingredient_dish.ingredient_id=ingredient.id

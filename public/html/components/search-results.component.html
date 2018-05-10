@@ -1,39 +1,46 @@
 <div>
     <div class="container">
-        <h1 class="text-center kdb-header my-4">Dishes named {{$parent.currentSearchTerm}}</h1>
-        <div class="white" v-for="(dish, $index) in $parent.searchResults.dishByName">
-            <hr v-if="$index">
-            <div class="row " >
-                <div class="col-sm-8">
+        <a v-if="$parent.searchResults.dishByName.length" data-toggle="collapse" href="#dish-by-name-collapse" class="text-center kdb-header my-4"><h1 class="my-5">Dishes named {{$parent.currentSearchTerm}}</h1></a>
 
-                    <div class="dishByNameResults">
-                        <div >
-                            <router-link v-bind:to="'/dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
-                            <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
+        <div class="collapse show" id="dish-by-name-collapse">
+
+            <div class="white" v-for="(dish, $index) in $parent.searchResults.dishByName">
+                <hr v-if="$index">
+                <div class="row " >
+                    <div class="col-sm-8">
+
+                        <div class="dishByNameResults">
+                            <div >
+                                <router-link v-bind:to="'/dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
+                                <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <router-link v-bind:to="'/dish/' + dish.id"><img class="dish-thumbnail-img" src="http://placekitten.com/200/200"></router-link>
+                    <div class="col-sm-4">
+                        <router-link v-bind:to="'/dish/' + dish.id"><img class="dish-thumbnail-img" src="http://placekitten.com/200/200"></router-link>
+                    </div>
                 </div>
             </div>
         </div>
-        <hr>
-        <h1 class="text-center kdb-header my-4">Dishes containing {{$parent.currentSearchTerm}}</h1>
-        <div class="white" v-for="(dish, $index) in $parent.searchResults.dishByIngredient">
-            <hr v-if="$index">
-            <div class="row " >
-                <div class="col-sm-8">
+        
+        <a v-if="$parent.searchResults.dishByIngredient.length" data-toggle="collapse" href="#dish-by-ingredient-collapse" class="text-center kdb-header my-4"><h1 class="my-5">Dishes containing {{$parent.currentSearchTerm}}</h1></a>
+        
+        <div class="collapse show" id="dish-by-ingredient-collapse">
+            <div class="white" v-for="(dish, $index) in $parent.searchResults.dishByIngredient">
+                <hr v-if="$index">
+                <div class="row " >
+                    <div class="col-sm-8">
 
-                    <div class="dishByIngredientResults">
-                        <div >
-                            <router-link v-bind:to="'/dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
-                            <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
+                        <div class="dishByIngredientResults">
+                            <div >
+                                <router-link v-bind:to="'/dish/' + dish.id"><h2 class="in-block">{{dish.name}}</h2></router-link>
+                                <pre><p>{{$parent.truncate(dish.description)}}</p></pre>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <router-link v-bind:to="'/dish/' + dish.id"><img class="dish-thumbnail-img" src="http://placekitten.com/200/200"></router-link>
+                    <div class="col-sm-4">
+                        <router-link v-bind:to="'/dish/' + dish.id"><img class="dish-thumbnail-img" src="http://placekitten.com/200/200"></router-link>
+                    </div>
                 </div>
             </div>
         </div>
