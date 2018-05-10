@@ -68,7 +68,15 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/search-results',
+            path: '/my-account',
+            component: function(){
+                return axios.get('/html/components/my-account.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
+        },
+        {
+            path: '/search-results/:query',
             component: function(){
                 return axios.get('/html/components/search-results.component.html').then(function(response){
                     return { template: response.data }
@@ -146,6 +154,7 @@ var mainVm = new Vue({
         menu   : [], // all dishes for a single menu
         menus  : [], // list of menus e.g. in my-menus
         alerts : [],
+        currentSearchTerm : '',
         forms  : {
             signupForm : {
                 username: 'jan',
@@ -171,7 +180,8 @@ var mainVm = new Vue({
             }
         },
         searchResults: {
-            dishByName: []
+            dishByName: [],
+            dishByIngredient: [],
         }
     },
     computed: {
@@ -216,10 +226,22 @@ var mainVm = new Vue({
             })
         },
         submitMiniSearchForm: function(){
+            if ( !this.forms.miniSearchForm.searchTerm.length ) { return }
             let q = this.forms.miniSearchForm.searchTerm
+            this.currentSearchTerm = q
+            this.forms.miniSearchForm.searchTerm = ''
             axios.get(`/search/?q=${q}`).then( (response)=>{
-                this.$router.push('/search-results')
+                this.$router.push(`/search-results/${q}`,)
                 this.searchResults.dishByName = response.data
+                console.log(response)
+            })
+            axios.get(`/search`, {
+                params: {
+                    q,
+                    searchBy: 'ingredient'
+                }
+            }).then( (response)=>{
+                this.searchResults.dishByIngredient = response.data
                 console.log(response)
             })
         },
