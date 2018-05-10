@@ -44,6 +44,14 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/my-dishes',
+            component: function(){
+                return axios.get('/html/components/my-dishes.component.html').then(function(response){
+                    return { template: response.data }
+                })
+            }
+        },
+        {
             path: '/create-a-menu',
             component: function(){
                 return axios.get('/html/components/create-a-menu.component.html').then(function(response){
@@ -133,7 +141,8 @@ var mainVm = new Vue({
     router: router,
     data: {
         user   : {},
-        dish   : [],
+        dish   : [], // a single dish that is being viewed
+        dishes : [], // a list of a user's dishes
         menu   : [], // all dishes for a single menu
         menus  : [], // list of menus e.g. in my-menus
         alerts : [],
@@ -226,15 +235,20 @@ var mainVm = new Vue({
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log('the user? ', response)
-                if ( response.data[0].id ) {
-                    this.user = response.data[0]
-                }
                 if ( response.data[0].menu_id ) {
                     this.menus = response.data
                 }
+                if ( response.data[0].id ) {
+                    this.user = response.data[0]
+                    axios.get('/user/dish').then( (response)=>{
+                        this.dishes = response.data
+                    })
+                }
+                
             }).catch((err)=>{
                 console.log(err)
             })
+
         },
         truncate: function(str, limit) {
             if ( !limit ) { limit = 60 }

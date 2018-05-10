@@ -4,20 +4,44 @@ const gar     = global.appRoot
 const pool    = require(`${gar}/db`)
 const router  = express.Router()
 
-router.get('/user', function(req, res, next){
-    pool.query( `
-        SELECT kdb_user.id AS id, kdb_user.email AS email, kdb_user.username AS username,
-            menu.id AS menu_id, menu.name AS menu_name, menu.description AS menu_description
-        FROM kdb_user 
-        LEFT JOIN menu ON kdb_user.id=menu.user_id
-        WHERE kdb_user.id=$1
+router.get('/user', async function(req, res, next){
+    try {
 
-    `, 
-    [req.session.id]
-    ).then(function(result){
-        // console.log('result? ', result)
-        res.send(result.rows)
-    })
+        const userQuery = await pool.query( `
+            SELECT kdb_user.id AS id, kdb_user.email AS email, kdb_user.username AS username,
+                menu.id AS menu_id, menu.name AS menu_name, menu.description AS menu_description
+            FROM kdb_user 
+            LEFT JOIN menu ON kdb_user.id=menu.user_id
+            WHERE kdb_user.id=$1
+
+        `, [req.session.id]
+        )
+        res.send(userQuery.rows)
+    }
+    catch(e){
+        console.log(e)
+        return next(e)
+    }
+})
+
+router.get('/user/dish', async function(req, res, next){
+    try {
+        const userQuery = await pool.query( `
+            SELECT kdb_user.id AS id, kdb_user.email AS email, kdb_user.username AS username,
+                dish.id AS dish_id, dish.name AS dish_name, dish.description AS dish_description
+            FROM kdb_user 
+            LEFT JOIN dish ON kdb_user.id=dish.user_id
+            WHERE kdb_user.id=$1
+
+        `, [req.session.id]
+        )
+        res.send(userQuery.rows)
+
+    }
+    catch(e){
+        console.log(e)
+        return next(e)
+    }
 })
 
 router.post('/user', function(req, res, next){

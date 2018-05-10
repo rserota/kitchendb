@@ -1,25 +1,25 @@
 <div>
-    <h1 class="text-center kdb-header my-4">My Menus</h1>
+    <h1 class="text-center kdb-header my-4">My Dishes</h1>
     <div class="container">
-        <div v-for="(menu, $index) in $parent.menus" class="white">
+        <div v-for="(dish, $index) in $parent.dishes" class="white">
             <hr v-if="$index">
             <div class="row " >
                 <div class="col-sm-8">
 
-                    <div class="menuResults">
+                    <div class="dishResults">
                         <div >
-                            <router-link v-bind:to="'/menu/' + menu.menu_id"><h2 class="in-block">{{menu.menu_name}}</h2></router-link>
-                            <pre><p>{{$parent.truncate(menu.menu_description)}}</p></pre>
+                            <router-link v-bind:to="'/dish/' + dish.dish_id"><h2 class="in-block">{{dish.dish_name}}</h2></router-link>
+                            <pre><p>{{$parent.truncate(dish.dish_description)}}</p></pre>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <router-link v-bind:to="'/menu/' + menu.menu_id"><img class="menu-thumbnail-img" src="http://placekitten.com/200/200/"></router-link>
+                    <router-link v-bind:to="'/dish/' + dish.dish_id"><img class="dish-thumbnail-img" src="http://placekitten.com/200/200/"></router-link>
                 </div>
             </div>
         </div>
-        <div class="white my-5" v-if="$parent.menus.length===0">
-            <p>It looks like you haven't made any menus. Would you like to <router-link to="/create-a-menu">create one?</router-link></p>
+        <div class="white my-5" v-if="$parent.dishes.length===0">
+            <p>It looks like you haven't made any dishes. Would you like to <router-link to="/create-a-dish">create one?</router-link></p>
         </div>
     </div>
     <div class="my-5"></div>
