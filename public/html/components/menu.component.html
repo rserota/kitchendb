@@ -14,11 +14,14 @@
         <div class="row mt-5">
             <div class="col-sm-5">
                 <h2 class="dish-heading">Dishes</h2>
-                <ul class="dish-list">
+                <ul v-if="$parent.menu[0].dish_name" class="dish-list">
                     <li v-for="dish in $parent.menu">
                         <router-link v-bind:to="'/dish/' + dish.dish_id">{{dish.dish_name}}</router-link>
                     </li>
                 </ul>
+                <div v-if="!$parent.menu[0].dish_name">
+                    <p>This menu doesn't have any dishes in it yet. Try searching for dishes to add.</p>
+                </div>
             </div>
             <div class="col-sm-7 text-center">
                 <img class="dish-img" src="https://placekitten.com/200/200">

@@ -29,8 +29,10 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: {
-                template: '#home-template'
+            component: function(){
+                return axios.get('/html/components/home.component.html').then(function(response){
+                    return { template: response.data }
+                })
             }
         },
         {
