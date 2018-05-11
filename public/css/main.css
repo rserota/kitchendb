@@ -83,6 +83,10 @@ button:hover .fa-plus-circle {
 }
 
 .alert {
+    margin: 0;
+}
+
+.alert-container {
     position: fixed;
     top: 0;
     width:100vw;

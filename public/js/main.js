@@ -79,7 +79,16 @@ const router = new VueRouter({
             path: '/search-results/:query',
             component: function(){
                 return axios.get('/html/components/search-results.component.html').then(function(response){
-                    return { template: response.data }
+                    return { 
+                        template: response.data,
+                        created: function(){
+                            // console.log('route', this.$route)
+                            if ( !this.$parent.currentSearchTerm && this.$route.params.query ) {
+                                this.$parent.forms.miniSearchForm.searchTerm = this.$route.params.query
+                                this.$parent.submitMiniSearchForm()
+                            }
+                        }
+                    }
                 })
             }
         },
@@ -156,28 +165,33 @@ var mainVm = new Vue({
         alerts : [],
         currentSearchTerm : '',
         forms  : {
-            signupForm : {
-                username: 'jan',
-                email:'jan.smith@gmail.com',
-                password:'dragons'
-            },
-            loginForm: {
-                email: 'jan.smith@gmail.com',
-                password:'dragons'
-            },
-            createDishForm: {
-                name: 'Lasagna',
-                description: "Just like grandma used to make.\n\nServes 3 to 5.",
-                ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}],
-                preparation: "Weave noodles. Apply cheese. Heat and serve."
-            },
-            createMenuForm: {
-                name: "Four course feast",
-                description: "yum yum yum... yum."
-            },
-            miniSearchForm: {
-                searchTerm: 'lasagna'
-            }
+            signupForm: {},
+            loginForm: {},
+            createDishForm: {},
+            createMenuForm: {},
+            miniSearchForm: {},
+            // signupForm : {
+            //     username: 'jan',
+            //     email:'jan.smith@gmail.com',
+            //     password:'dragons'
+            // },
+            // loginForm: {
+            //     email: 'jan.smith@gmail.com',
+            //     password:'dragons'
+            // },
+            // createDishForm: {
+            //     name: 'Lasagna',
+            //     description: "Just like grandma used to make.\n\nServes 3 to 5.",
+            //     ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}],
+            //     preparation: "Weave noodles. Apply cheese. Heat and serve."
+            // },
+            // createMenuForm: {
+            //     name: "Four course feast",
+            //     description: "yum yum yum... yum."
+            // },
+            // miniSearchForm: {
+            //     searchTerm: 'lasagna'
+            // }
         },
         searchResults: {
             dishByName: [],
@@ -192,20 +206,30 @@ var mainVm = new Vue({
             axios.post('/user', this.forms.signupForm).then( (response)=>{
                 console.log(response)
                 this.alerts.push(response.data.alert)
-                $('#signup-modal').modal('hide')
+                if ( response.data.success ) { $('#signup-modal').modal('hide') }
                 this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
+                this.alerts.push({
+                    heading: "Signup Failed:",
+                    body:  `Try again later.`,
+                    class: 'alert-danger'
+                })
             })
         },
         submitLoginForm: function(){
             axios.post('/user/login', this.forms.loginForm).then( (response)=>{
                 console.log(response)
                 if ( response.data.alert ) { this.alerts.push(response.data.alert) }
-                $('#login-modal').modal('hide')
+                if ( response.data.success ) { $('#login-modal').modal('hide') }
                 this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
+                this.alerts.push({
+                    heading: "Login Failed:",
+                    body:  `Try again later.`,
+                    class: 'alert-danger'
+                })
             })
         },
         submitCreateMenuForm: function(){
@@ -231,8 +255,8 @@ var mainVm = new Vue({
             this.currentSearchTerm = q
             this.forms.miniSearchForm.searchTerm = ''
             axios.get(`/search/?q=${q}`).then( (response)=>{
-                this.$router.push(`/search-results/${q}`,)
                 this.searchResults.dishByName = response.data
+                this.$router.push(`/search-results/${q}`)
                 console.log(response)
             })
             axios.get(`/search`, {
@@ -257,15 +281,19 @@ var mainVm = new Vue({
         getFreshData: function(){
             axios.get('/user').then( (response)=>{
                 console.log('the user? ', response)
-                if ( response.data[0].menu_id ) {
-                    this.menus = response.data
+                if ( response.data[0] ) {
+
+                    if ( response.data[0].menu_id ) {
+                        this.menus = response.data
+                    }
+                    if ( response.data[0].id ) {
+                        this.user = response.data[0]
+                        axios.get('/user/dish').then( (response)=>{
+                            this.dishes = response.data
+                        })
+                    }
                 }
-                if ( response.data[0].id ) {
-                    this.user = response.data[0]
-                    axios.get('/user/dish').then( (response)=>{
-                        this.dishes = response.data
-                    })
-                }
+                else { console.log('no user.')}
                 
             }).catch((err)=>{
                 console.log(err)

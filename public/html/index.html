@@ -16,11 +16,13 @@
         <div id="app">
 
             <!-- alerts/banners go here -->
-            <div v-for="alert in alerts" v-if="alert.class" v-cloak v-bind:class="alert.class" class="alert alert-dismissible fade show" role="alert">
-                <strong>{{alert.heading}}</strong> {{alert.body}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="alert-container">
+                <div v-for="alert in alerts" v-if="alert.class" v-cloak v-bind:class="alert.class" class="alert alert-dismissible fade show" role="alert">
+                    <strong>{{alert.heading}}</strong> {{alert.body}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
             <!-- end alerts/banners -->
 
@@ -39,7 +41,7 @@
 
                     </ul> -->
                     <form v-on:submit.prevent="submitMiniSearchForm" class="form-inline my-2 my-lg-0 mr-auto mini-search-form">
-                        <input v-model="forms.miniSearchForm.searchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <input required v-model="forms.miniSearchForm.searchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <div id="logged-out-links" class="navbar-nav" v-if="!user.id" v-cloak>

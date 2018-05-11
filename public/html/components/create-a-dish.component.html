@@ -6,7 +6,7 @@
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <label>Name</label>
-                    <input class="form-control" v-model="$parent.forms.createDishForm.name" placeholder="Lasagna">
+                    <input required class="form-control" v-model="$parent.forms.createDishForm.name" placeholder="Lasagna">
                 </div>
 
             </div>
@@ -22,7 +22,7 @@
             <div class="text-center row " v-for="(ingredient, $index) in $parent.forms.createDishForm.ingredients">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <input class="form-control mb-1"  v-model="ingredient.name">
+                    <input required class="form-control mb-1"  v-model="ingredient.name">
                 </div>
                 <div  class="col-sm-4 text-left">
                     <span v-on:click="$parent.forms.createDishForm.ingredients.splice($index, 1)">

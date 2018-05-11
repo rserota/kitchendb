@@ -44,6 +44,11 @@
                 </div>
             </div>
         </div>
+        <h2 
+            v-if="!$parent.searchResults.dishByIngredient.length && !$parent.searchResults.dishByName.length" 
+            class="white text-center"
+        >
+        Your search found no Results. Try being less specific.</h2>
     </div>
     <div class="my-5"></div>
 </div>
