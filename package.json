@@ -7,7 +7,8 @@
     "dump": "pg_dump kitchendb > kitchendb.sql",
     "drop_dishes": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE dish CASCADE;'",
     "drop_ingredients": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE ingredient CASCADE;'",
-    "drop_food": "npm run drop_dishes && npm run drop_ingredients",
+    "drop_menus": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE menu CASCADE;'",
+    "drop_food": "npm run drop_dishes && npm run drop_ingredients && npm run drop_menus",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
