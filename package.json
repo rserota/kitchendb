@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dump": "pg_dump kitchendb > kitchendb.sql",
+    "dump": "pg_dump -Fc kitchendb > kitchendb.sql",
     "drop_dishes": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE dish CASCADE;'",
     "drop_ingredients": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE ingredient CASCADE;'",
     "drop_menus": "psql -U raphael -h localhost kitchendb -c 'TRUNCATE menu CASCADE;'",
