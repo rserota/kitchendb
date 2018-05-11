@@ -1,7 +1,7 @@
 <div>
     <h1 class="text-center kdb-header my-4">My Dishes</h1>
     <div class="container">
-        <div v-for="(dish, $index) in $parent.dishes" class="white">
+        <div v-if="$parent.dishes[0].dish_id" v-for="(dish, $index) in $parent.dishes" class="white">
             <hr v-if="$index">
             <div class="row " >
                 <div class="col-sm-8">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="white my-5" v-if="$parent.dishes.length===0">
+        <div class="white my-5" v-if="$parent.dishes.length===0 || !$parent.dishes[0].dish_id">
             <p>It looks like you haven't made any dishes. Would you like to <router-link to="/create-a-dish">create one?</router-link></p>
         </div>
     </div>

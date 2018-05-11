@@ -57,8 +57,8 @@ router.post('/user', async function(req, res, next){
             `INSERT INTO kdb_user (username, email, password) VALUES ($1, $2, $3) RETURNING id`,
             [req.body.username, req.body.email, hashedPassword]
         )
-        console.log("reeeesult: ", result)
-        req.session.id = result.rows[0].id
+        console.log("reeeesult: ", userInsert)
+        req.session.id = userInsert.rows[0].id
         res.send({
             success:'success',
             alert: {
@@ -69,6 +69,17 @@ router.post('/user', async function(req, res, next){
         })
     }
     catch(e){
+        console.log('e? ', e)
+        if ( e.constraint === 'kdb_user_email_key' ) {
+            res.send({
+                failure:'failure',
+                alert: {
+                    heading: "Signup Failed:",
+                    body:  `A user with that email already exists.`,
+                    class: 'alert-danger'
+                }
+            }) 
+        }
         res.send({
             failure:'failure',
             alert: {

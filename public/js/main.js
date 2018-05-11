@@ -165,33 +165,29 @@ var mainVm = new Vue({
         alerts : [],
         currentSearchTerm : '',
         forms  : {
-            signupForm: {},
-            loginForm: {},
-            createDishForm: {},
-            createMenuForm: {},
-            miniSearchForm: {},
-            // signupForm : {
-            //     username: 'jan',
-            //     email:'jan.smith@gmail.com',
-            //     password:'dragons'
-            // },
-            // loginForm: {
-            //     email: 'jan.smith@gmail.com',
-            //     password:'dragons'
-            // },
-            // createDishForm: {
-            //     name: 'Lasagna',
-            //     description: "Just like grandma used to make.\n\nServes 3 to 5.",
-            //     ingredients: [{name:'four gallons of shredded cheese'},{name:'pallet of noodles'}],
-            //     preparation: "Weave noodles. Apply cheese. Heat and serve."
-            // },
-            // createMenuForm: {
-            //     name: "Four course feast",
-            //     description: "yum yum yum... yum."
-            // },
-            // miniSearchForm: {
-            //     searchTerm: 'lasagna'
-            // }
+
+            signupForm : {
+                username: '',
+                email:'',
+                password:''
+            },
+            loginForm: {
+                email: '',
+                password:''
+            },
+            createDishForm: {
+                name: '',
+                description: "",
+                ingredients: [{name:''},{name:''}],
+                preparation: ""
+            },
+            createMenuForm: {
+                name: "",
+                description: ""
+            },
+            miniSearchForm: {
+                searchTerm: ''
+            }
         },
         searchResults: {
             dishByName: [],
@@ -245,6 +241,7 @@ var mainVm = new Vue({
             axios.post('/dish', this.forms.createDishForm).then( (response)=>{
                 console.log(response)
                 this.alerts.push(response.data.alert)
+                this.getFreshData()
             }).catch((err)=>{
                 console.log(err)
             })
@@ -301,6 +298,7 @@ var mainVm = new Vue({
 
         },
         truncate: function(str, limit) {
+            if ( !str ) { return '' }
             if ( !limit ) { limit = 60 }
             if ( str.length < limit ) { return str }
             else { return str.slice(0, limit) + '...' }
